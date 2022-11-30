@@ -14,6 +14,7 @@ app.post("/signup", async (req, res) => {
   // console.log("Write user into DB.");
   // return res.json({ user: {} });
 
+  // Store a user-copy on Chat Engine!
   try {
     const r = await axios.post(
       "https://api.chatengine.io/users/",
@@ -32,6 +33,7 @@ app.post("/login", async (req, res) => {
   // console.log("Fetch user from DB.");
   // return res.json({ user: {} });
 
+  // Fetch this user from Chat Engine in this project!
   try {
     const r = await axios.get("https://api.chatengine.io/users/me/", {
       headers: {
