@@ -15,13 +15,13 @@ Go to [Chat Engine](https://chatengine.io) to setup your own chat server.
 - Click "New Project" and follow the steps
 - Your `Project ID` and `Private Key` will be required for step 2
 
-### 2 - Connect `.env` to Chat Engine
+### 2 - Connect `server/.env` to Chat Engine
 
 We will connect to your Chat Engine server with environment varibles.
 
 This allows you to connect to different chat-servers in local vs staging vs production.
 
-Replace the UUIDs below with your own. In `.env` write:
+Replace the UUIDs below with your own. In `server/.env` write:
 
 ```
 CHAT_ENGINE_PROJECT_ID=5d498a31-cd23-42b7-b367-4fcc9463bd2f

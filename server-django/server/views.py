@@ -8,6 +8,10 @@ from django.contrib.auth.hashers import make_password
 
 import requests
 
+import environ
+env = environ.Env()
+environ.Env.read_env()
+
 @api_view(['POST'])
 def signup(request):
     username = request.data['username']
@@ -32,7 +36,7 @@ def signup(request):
             "first_name": first_name,
             "last_name": last_name,
         },
-        headers={ "Private-Key": "49a46286-91c3-4f9c-92bf-284ae51b7628" }
+        headers={ "Private-Key": env('CHAT_ENGINE_PRIVATE_KEY') }
     )
 
     return Response(response.json(), status=response.status_code)
@@ -48,7 +52,7 @@ def login(request):
 
     response = requests.get('https://api.chatengine.io/users/me/', 
         headers={ 
-            "Project-ID": "5d498a31-cd23-42b7-b367-4fcc9463bd2f",
+            "Project-ID": env('CHAT_ENGINE_PROJECT_ID'),
             "User-Name": username,
             "User-Secret": secret
         }
