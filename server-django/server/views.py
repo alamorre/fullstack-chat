@@ -20,13 +20,13 @@ def signup(request):
     first_name = request.data['first_name']
     last_name = request.data['last_name']
 
-    user = User.objects.create(
-        username=username, 
-        email=email, 
-        password=make_password(secret),
-        first_name=first_name, 
-        last_name=last_name
-    )
+    # user = User.objects.create(
+    #     username=username, 
+    #     email=email, 
+    #     password=make_password(secret),
+    #     first_name=first_name, 
+    #     last_name=last_name
+    # )
 
     response = requests.post('https://api.chatengine.io/users/', 
         data={
@@ -46,9 +46,9 @@ def login(request):
     username = request.data['username']
     secret = request.data['secret']
 
-    user = get_object_or_404(User, username=username)
-    if not user.check_password(secret):
-        return Response({}, status=status.HTTP_404_NOT_FOUND)
+    # user = get_object_or_404(User, username=username)
+    # if not user.check_password(secret):
+    #     return Response({}, status=status.HTTP_404_NOT_FOUND)
 
     response = requests.get('https://api.chatengine.io/users/me/', 
         headers={ 
