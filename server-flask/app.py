@@ -7,7 +7,6 @@ load_dotenv()
 
 @app.route('/login', methods=['POST'])
 def login():
-    print(request.get_json())
     response = requests.get('https://api.chatengine.io/users/me/', 
         headers={ 
             "Project-ID": os.environ['CHAT_ENGINE_PROJECT_ID'],
