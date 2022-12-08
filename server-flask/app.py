@@ -1,8 +1,10 @@
 from flask import Flask, request
 from dotenv import load_dotenv
+from flask_cors import CORS
 import os, requests
 
 app = Flask(__name__)
+CORS(app)
 load_dotenv()
 
 @app.route('/login', methods=['POST'])
