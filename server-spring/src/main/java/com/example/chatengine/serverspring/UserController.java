@@ -5,58 +5,107 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.json.JSONObject;
+
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 @RestController
 public class UserController {
-    // private static String CHAT_ENGINE_PROJECT_ID =
-    // "5d498a31-cd23-42b7-b367-4fcc9463bd2f";
+    private static String CHAT_ENGINE_PROJECT_ID = "5d498a31-cd23-42b7-b367-4fcc9463bd2f";
     private static String CHAT_ENGINE_PRIVATE_KEY = "49a46286-91c3-4f9c-92bf-284ae51b7628";
 
-    @RequestMapping(path = "/login", method = RequestMethod.GET)
-    public String getLogin() {
-        return "user allowed";
-    }
-
-    @RequestMapping(path = "/signup", method = RequestMethod.GET)
-    public String newSignup() {
-        HttpURLConnection connection = null;
+    @RequestMapping(path = "/login", method = RequestMethod.POST)
+    public Map<String, Object> getLogin(@RequestBody HashMap<String, String> request) {
+        HttpURLConnection con = null;
         try {
             // Create connection
-            URL url = new URL("https://api.chatengine.io/users");
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("POST");
-            // Headers
-            connection.setRequestProperty("Content-Type", "application/json");
-            connection.setRequestProperty("Accept", "application/json");
-            connection.setRequestProperty("Private-Key", CHAT_ENGINE_PRIVATE_KEY);
-            // Add body
-            connection.setDoOutput(true);
-            String jsonInputString = "{\"username\": \"adam1\", \"secret\": \"pass1234\", \"first_name\": \"adam\", \"last_name\": \"lamorre\", \"email\": \"alamorre@mail.ca\"}";
-            try (OutputStream os = connection.getOutputStream()) {
-                byte[] input = jsonInputString.getBytes("utf-8");
-                os.write(input, 0, input.length);
-            }
-            // Generate and return response
+            URL url = new URL("https://api.chatengine.io/users/me");
+            con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            // Set headers
+            con.setRequestProperty("Content-Type", "application/json");
+            con.setRequestProperty("Accept", "application/json");
+            con.setRequestProperty("Project-ID", CHAT_ENGINE_PROJECT_ID);
+            con.setRequestProperty("User-Name", request.get("username"));
+            con.setRequestProperty("User-Secret", request.get("secret"));
+            // Generate response
+            StringBuilder responseStr = new StringBuilder();
             try (BufferedReader br = new BufferedReader(
-                    new InputStreamReader(connection.getInputStream(), "utf-8"))) {
-                StringBuilder response = new StringBuilder();
+                    new InputStreamReader(con.getInputStream(), "utf-8"))) {
                 String responseLine = null;
                 while ((responseLine = br.readLine()) != null) {
-                    response.append(responseLine.trim());
+                    responseStr.append(responseLine.trim());
                 }
-                return response.toString();
             }
-
+            // Jsonify and return response
+            Map<String, Object> response = new Gson().fromJson(
+                    responseStr.toString(), new TypeToken<HashMap<String, Object>>() {
+                    }.getType());
+            return response;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         } finally {
-            if (connection != null) {
-                connection.disconnect();
+            if (con != null) {
+                con.disconnect();
+            }
+        }
+    }
+
+    @RequestMapping(path = "/signup", method = RequestMethod.POST)
+    public Map<String, Object> newSignup(@RequestBody HashMap<String, String> request) {
+        HttpURLConnection con = null;
+        try {
+            // Create connection
+            URL url = new URL("https://api.chatengine.io/users");
+            con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            // Set headers
+            con.setRequestProperty("Content-Type", "application/json");
+            con.setRequestProperty("Accept", "application/json");
+            con.setRequestProperty("Private-Key", CHAT_ENGINE_PRIVATE_KEY);
+            // Add request body
+            con.setDoOutput(true);
+            Map<String, String> body = new HashMap<String, String>();
+            body.put("username", request.get("username"));
+            body.put("secret", request.get("secret"));
+            body.put("email", request.get("email"));
+            body.put("first_name", request.get("first_name"));
+            body.put("last_name", request.get("last_name"));
+            String jsonInputString = new JSONObject(body).toString();
+            try (OutputStream os = con.getOutputStream()) {
+                byte[] input = jsonInputString.getBytes("utf-8");
+                os.write(input, 0, input.length);
+            }
+            // Generate response
+            StringBuilder responseStr = new StringBuilder();
+            try (BufferedReader br = new BufferedReader(
+                    new InputStreamReader(con.getInputStream(), "utf-8"))) {
+                String responseLine = null;
+                while ((responseLine = br.readLine()) != null) {
+                    responseStr.append(responseLine.trim());
+                }
+            }
+            // Jsonify and return response
+            Map<String, Object> response = new Gson().fromJson(
+                    responseStr.toString(), new TypeToken<HashMap<String, Object>>() {
+                    }.getType());
+            return response;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (con != null) {
+                con.disconnect();
             }
         }
     }
