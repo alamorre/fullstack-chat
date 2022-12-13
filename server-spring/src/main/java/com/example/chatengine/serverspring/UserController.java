@@ -11,6 +11,7 @@ import java.util.Map;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +25,7 @@ public class UserController {
     private static String CHAT_ENGINE_PROJECT_ID = "5d498a31-cd23-42b7-b367-4fcc9463bd2f";
     private static String CHAT_ENGINE_PRIVATE_KEY = "49a46286-91c3-4f9c-92bf-284ae51b7628";
 
+    @CrossOrigin
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public ResponseEntity getLogin(@RequestBody HashMap<String, String> request) {
         HttpURLConnection con = null;
@@ -62,6 +64,7 @@ public class UserController {
         }
     }
 
+    @CrossOrigin
     @RequestMapping(path = "/signup", method = RequestMethod.POST)
     public ResponseEntity newSignup(@RequestBody HashMap<String, String> request) {
         HttpURLConnection con = null;
