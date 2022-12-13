@@ -9,7 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.json.JSONObject;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,7 +25,7 @@ public class UserController {
     private static String CHAT_ENGINE_PRIVATE_KEY = "49a46286-91c3-4f9c-92bf-284ae51b7628";
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public Map<String, Object> getLogin(@RequestBody HashMap<String, String> request) {
+    public ResponseEntity getLogin(@RequestBody HashMap<String, String> request) {
         HttpURLConnection con = null;
         try {
             // Create connection
@@ -50,10 +51,10 @@ public class UserController {
             Map<String, Object> response = new Gson().fromJson(
                     responseStr.toString(), new TypeToken<HashMap<String, Object>>() {
                     }.getType());
-            return response;
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         } finally {
             if (con != null) {
                 con.disconnect();
@@ -62,7 +63,7 @@ public class UserController {
     }
 
     @RequestMapping(path = "/signup", method = RequestMethod.POST)
-    public Map<String, Object> newSignup(@RequestBody HashMap<String, String> request) {
+    public ResponseEntity newSignup(@RequestBody HashMap<String, String> request) {
         HttpURLConnection con = null;
         try {
             // Create connection
@@ -99,10 +100,10 @@ public class UserController {
             Map<String, Object> response = new Gson().fromJson(
                     responseStr.toString(), new TypeToken<HashMap<String, Object>>() {
                     }.getType());
-            return response;
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         } finally {
             if (con != null) {
                 con.disconnect();
