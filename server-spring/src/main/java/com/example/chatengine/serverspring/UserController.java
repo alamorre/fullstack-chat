@@ -30,7 +30,7 @@ public class UserController {
     public ResponseEntity getLogin(@RequestBody HashMap<String, String> request) {
         HttpURLConnection con = null;
         try {
-            // Create connection
+            // Create GET request
             URL url = new URL("https://api.chatengine.io/users/me");
             con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
@@ -40,7 +40,7 @@ public class UserController {
             con.setRequestProperty("Project-ID", CHAT_ENGINE_PROJECT_ID);
             con.setRequestProperty("User-Name", request.get("username"));
             con.setRequestProperty("User-Secret", request.get("secret"));
-            // Generate response
+            // Generate response String
             StringBuilder responseStr = new StringBuilder();
             try (BufferedReader br = new BufferedReader(
                     new InputStreamReader(con.getInputStream(), "utf-8"))) {
@@ -49,7 +49,7 @@ public class UserController {
                     responseStr.append(responseLine.trim());
                 }
             }
-            // Jsonify and return response
+            // Jsonify + return response
             Map<String, Object> response = new Gson().fromJson(
                     responseStr.toString(), new TypeToken<HashMap<String, Object>>() {
                     }.getType());
@@ -69,7 +69,7 @@ public class UserController {
     public ResponseEntity newSignup(@RequestBody HashMap<String, String> request) {
         HttpURLConnection con = null;
         try {
-            // Create connection
+            // Create POST request
             URL url = new URL("https://api.chatengine.io/users");
             con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
@@ -90,7 +90,7 @@ public class UserController {
                 byte[] input = jsonInputString.getBytes("utf-8");
                 os.write(input, 0, input.length);
             }
-            // Generate response
+            // Generate response String
             StringBuilder responseStr = new StringBuilder();
             try (BufferedReader br = new BufferedReader(
                     new InputStreamReader(con.getInputStream(), "utf-8"))) {
@@ -99,7 +99,7 @@ public class UserController {
                     responseStr.append(responseLine.trim());
                 }
             }
-            // Jsonify and return response
+            // Jsonify + return response
             Map<String, Object> response = new Gson().fromJson(
                     responseStr.toString(), new TypeToken<HashMap<String, Object>>() {
                     }.getType());
