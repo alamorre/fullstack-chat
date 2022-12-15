@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+# pip install "uvicorn[standard]"
 
 from pydantic import BaseModel
 from typing import Union
