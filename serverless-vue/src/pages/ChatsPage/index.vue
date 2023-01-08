@@ -1,9 +1,11 @@
 <template>
-    <PrettyChatWindow
-        projectId="794653df-052a-4ad2-b0aa-d6c251a10aef"
-        :username="username"
-        :secret="secret" 
-    />
+    <div style="height: 80vh">
+        <PrettyChatWindow
+            projectId="794653df-052a-4ad2-b0aa-d6c251a10aef"
+            :username="username"
+            :secret="secret" 
+        />
+    </div>
 </template>
 
 <script>
