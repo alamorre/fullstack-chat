@@ -3,14 +3,20 @@ import AuthPage from './pages/AuthPage/index.vue'
 </script>
 
 <template>
-  <AuthPage @onAuth="handleAuth" />
+  <div v-if="user">chats...</div>
+  <div v-else><AuthPage @onAuth="handleAuth" /></div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      user: undefined,
+    }
+  },
   methods: {
     handleAuth(user) {
-      console.log(`User: ${user}`)
+      this.user = user;
     },
   },
 }
