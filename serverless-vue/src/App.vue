@@ -1,10 +1,11 @@
 <script setup>
 import AuthPage from './pages/AuthPage/index.vue'
+import ChatsPage from './pages/ChatsPage/index.vue'
 </script>
 
 <template>
-  <div v-if="user">chats...</div>
-  <div v-else><AuthPage @onAuth="handleAuth" /></div>
+  <AuthPage v-if="!user" @onAuth="handleAuth" />
+  <ChatsPage v-else v-bind:username="user.username" v-bind:secret="user.secret" />
 </template>
 
 <script>
