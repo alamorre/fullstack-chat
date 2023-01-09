@@ -12,8 +12,7 @@
     "axios": "^1.2.2",
     "react-chat-engine-pretty": "^0.1.5",
     "veaury": "^2.3.11",
-    "vue": "^3.2.45",
-    "vuera": "^0.2.7"
+    "vue": "^3.2.45"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
