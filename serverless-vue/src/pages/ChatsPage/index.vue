@@ -1,18 +1,31 @@
 <template>
-    <div style="height: 80vh">
+    <div style="height: 100vh">
         <PrettyChatWindow
-            projectId="794653df-052a-4ad2-b0aa-d6c251a10aef"
+            :projectId="projectId"
             :username="username"
             :secret="secret" 
         />
     </div>
 </template>
 
+<style>
+.ce-new-chat-button {
+    width: 32px;
+    position: relative;
+    bottom: 22px;
+}
+</style>
+
 <script>
 import { PrettyChatWindow } from 'react-chat-engine-pretty';
 import { applyReactInVue } from 'veaury'
 
 export default {
+    data() {
+        return {
+            projectId: import.meta.env.VITE_CHAT_ENGINE_PROJECT_ID,
+        }
+    },
     components: { 
         PrettyChatWindow: applyReactInVue(PrettyChatWindow)
     },
