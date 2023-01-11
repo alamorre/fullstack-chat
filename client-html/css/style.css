@@ -1,0 +1,79 @@
+body {
+    background-image: url('valley.jpeg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+    margin: 0px;
+}
+
+.gradient-cover {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(75deg, rgb(40,43,54) 0%, rgb(40,43,54) 50%, rgba(40,43,54,0.8) 100%);
+}
+
+.form-card {
+    width: 50%;
+    max-width: 350px;
+    padding: 17.5% 25%;
+}
+
+.form-title { 
+    font-size: 42px; 
+    font-family: 'Avenir'; 
+    font-weight: 800; 
+    letter-spacing: 0.5px; 
+    color: #e8e8e8; 
+    padding-bottom: 12px; 
+}
+
+.form-subtitle {
+    font-size: 18px;
+    font-family: 'Avenir';
+    letter-spacing: 0.5px;
+    color: #afafaf;
+    padding-bottom: 24px;
+}
+
+.auth {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    padding-bottom: 12px;
+}
+.auth-label {
+    position: absolute;
+    top: 8px;
+    left: 18px;
+    font-size: 11px;
+    color: rgb(175, 175, 175);
+    font-family: Avenir;
+    width: 100px;
+}
+.auth-input {
+    background-color: #3e404b;
+    color: white;
+    font-family: "Avenir";
+    outline: none;
+    border: none;
+    border-radius: 8px;
+    padding: 24px 18px 12px 18px;
+    width: calc(100% - 18px - 18px);
+    margin-bottom: 12px;
+}
+.auth-button {
+    width: 100%;
+    height: 53px;
+    color: white;
+    background-color: #fa541c;
+    border: none;
+    outline: none;
+    border-radius: 8px;
+    font-family: "Avenir";
+    cursor: pointer;
+    transition: all .44s ease;
+    -webkit-transition: all .44s ease;
+    -moz-transition: all .44s ease;
+}
+.auth-button:hover { filter: brightness(145%); }
