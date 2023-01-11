@@ -7,7 +7,7 @@ body {
     margin: 0px;
 }
 
-.gradient-cover {
+.background {
     width: 100vw;
     height: 100vh;
     background: linear-gradient(75deg, rgb(40,43,54) 0%, rgb(40,43,54) 50%, rgba(40,43,54,0.8) 100%);
