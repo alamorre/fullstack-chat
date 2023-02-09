@@ -1,0 +1,5 @@
+{
+  "projects": {
+    "default": "fullstack-chat-server"
+  }
+}
