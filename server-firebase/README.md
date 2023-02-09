@@ -169,8 +169,47 @@ I highly recommend TypeScript with Chat Engine, you'll see why soon :)
 
 Now you should have a `frontend/` folder right next to `functions/`.
 
-Let's CD into this folder and start adding code.
+Let's CD into this folder, install dependencies, and run in dev-mode.
 
 ```bash
 cd frontend
+npm install
+npm run dev
+```
+
+And now you should see a pretty website on http://localhost:3000
+
+For the final push, let's add all the code we need to our frontend!
+
+## 5. Coding the Frontend
+
+To start, diable StrictMode in `next.config.js` and re-run the server with `yarn dev`.
+
+```javascript
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: false,
+};
+
+module.exports = nextConfig;
+```
+
+This allows us to connect web-sockets in a NextJS project.
+
+Next, let's delete the following:
+
+- `styles/Home.module.css`
+- The `pages/api` directory
+
+Next, let's add the following:
+
+- `pages/AuthPage.tsx`
+- `pages/ChatsPage.tsx`
+
+In both, just add the following code to keep our project happy:
+
+```typescript
+export default function Page() {
+  return <div />;
+}
 ```
