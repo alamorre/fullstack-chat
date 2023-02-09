@@ -20,12 +20,14 @@ module.exports = {
   ignorePatterns: [
     "/lib/**/*", // Ignore built files.
   ],
-  plugins: [
-    "@typescript-eslint",
-    "import",
-  ],
+  plugins: ["@typescript-eslint", "import"],
   rules: {
+    // prettier-ignore
     "quotes": ["error", "double"],
     "import/no-unresolved": 0,
+    // prettier-ignore
+    "indent": ["off", "always"],
+    "object-curly-spacing": ["off", "always"],
+    "@typescript-eslint/no-var-requires": ["off", "always"],
   },
 };
