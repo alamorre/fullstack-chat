@@ -213,3 +213,71 @@ export default function Page() {
   return <div />;
 }
 ```
+
+### Enable a Firebase app and create frontend/firebase.ts
+
+- npm install firebase
+- create a .env file and replace with your values
+
+```
+NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyDqXgd1AwRdqSCpdrhf_t0-rB1MuE2sd4A
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=chat-rce.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=chat-rce
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=chat-rce.appspot.com
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=45443650042
+NEXT_PUBLIC_FIREBASE_APP_ID=1:45443650042:web:2598e30783c0e0bd545443
+NEXT_PUBLIC_FUNCTIONS_URL=https://us-central1-chat-rce.cloudfunctions.net/v1
+NEXT_PUBLIC_CHAT_ENGINE_PROJECT_ID=16b08e85-e4c9-4541-b30e-45e157ec3821
+```
+
+Make sure `NEXT_PUBLIC_CHAT_ENGINE_PROJECT_ID` is there with yuor project ID.
+
+- add this code to firebase.ts
+
+```
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+
+const firebaseConfig = {
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+};
+
+export const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+```
+
+Now add this code to AuthPage:
+
+```
+import { auth } from "@/firebase";
+import { signInWithRedirect, GoogleAuthProvider } from "firebase/auth";
+
+export default function AuthPage() {
+  const onClick = () => {
+    signInWithRedirect(auth, new GoogleAuthProvider());
+  };
+
+  return (
+    <div className="page">
+      <div className="logo">👋 💬 🤖 </div>
+      <div className="text">Welcome to ChatRCE</div>
+      <div className="text" style={{ paddingBottom: "16px" }}>
+        Log in with your account to continue
+      </div>
+      <button className="button" onClick={onClick}>
+        Log In
+      </button>{" "}
+      <button className="button" onClick={onClick}>
+        Sign Up
+      </button>
+    </div>
+  );
+}
+```
+
+Replace gloabl.css with [the following code too]().
