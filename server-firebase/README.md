@@ -1,4 +1,4 @@
-# Coming soon!
+# Build a scalable chat app with Firebase, Next JS, and ChatEngine.io
 
 In this post, we'll be building (and deploying) a scalable, full-stack chat application using Firebase, NextJS, and ChatEngine.io!
 
