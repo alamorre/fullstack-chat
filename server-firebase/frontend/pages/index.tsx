@@ -1,16 +1,20 @@
 import { useState } from "react";
 
 import AuthPage from "./AuthPage";
-import ChatsPage from "./ChatsPage";
+import ChatPage from "./ChatsPage";
+import Loading from "./Loading";
+import { auth } from "@/firebase";
+import { User } from "firebase/auth";
 
-function App() {
-  const [user, setUser] = useState();
+export default function Home() {
+  const [user, setUser] = useState<User | null>();
+  auth.onAuthStateChanged((user) => setUser(user));
 
-  if (!user) {
+  if (user === undefined) {
+    return <Loading />;
+  } else if (user === null) {
     return <AuthPage />;
   } else {
-    return <ChatsPage />;
+    return <ChatPage user={user} />;
   }
 }
-
-export default App;

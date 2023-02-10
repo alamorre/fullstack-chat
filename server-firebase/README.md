@@ -169,6 +169,8 @@ I highly recommend TypeScript with Chat Engine, you'll see why soon :)
 
 Now you should have a `frontend/` folder right next to `functions/`.
 
+Important side note: Replace `styles/gloabl.css` with [the following code too](https://raw.githubusercontent.com/alamorre/fullstack-chat/main/server-firebase/frontend/styles/globals.css).
+
 Let's CD into this folder, install dependencies, and run in dev-mode.
 
 ```bash
@@ -201,16 +203,65 @@ Next, let's delete the following:
 - `styles/Home.module.css`
 - The `pages/api` directory
 
-Next, let's add the following:
-
-- `pages/AuthPage.tsx`
-- `pages/ChatsPage.tsx`
-
-In both, just add the following code to keep our project happy:
+Next, let's create an auth page (`pages/AuthPage.tsx`) with the following code
 
 ```typescript
 export default function Page() {
   return <div />;
+}
+```
+
+Next, let's create an chats page (`pages/ChatsPage.tsx`) with the following code
+
+- `pages/ChatsPage.tsx`
+
+```typescript
+import { User } from "firebase/auth";
+
+interface ChatProps {
+  user: User;
+}
+
+export default function Page(props: ChatProps) {
+  return <div />;
+}
+```
+
+Next, add a loading page (`pages/Loading.tsx`) with the following code:
+
+```typescript
+export default function Loading() {
+  return (
+    <div className="page">
+      <div className="logo">☝️</div>
+      <div className="text">Loading your info...</div>
+    </div>
+  );
+}
+```
+
+Finally, modify the `pages/index.tsx` file to load the pages based on auth state:
+
+```typescript
+import { useState } from "react";
+
+import AuthPage from "./AuthPage";
+import ChatPage from "./ChatsPage";
+import Loading from "./Loading";
+import { auth } from "@/firebase";
+import { User } from "firebase/auth";
+
+export default function Home() {
+  const [user, setUser] = useState<User | null>();
+  auth.onAuthStateChanged((user) => setUser(user));
+
+  if (user === undefined) {
+    return <Loading />;
+  } else if (user === null) {
+    return <AuthPage />;
+  } else {
+    return <ChatPage user={user} />;
+  }
 }
 ```
 
@@ -280,4 +331,36 @@ export default function AuthPage() {
 }
 ```
 
-Replace gloabl.css with [the following code too]().
+Finally, let's connect our new user to Chat Engine using [react-chat-engine-pretty](https://www.npmjs.com/package/react-chat-engine-pretty)!
+
+Modify `pages/ChatsPage.tsx` with the following code:
+
+```typescript
+import { auth } from "@/firebase";
+import { signOut, User } from "firebase/auth";
+import { PrettyChatWindow } from "react-chat-engine-pretty";
+interface ChatProps {
+  user: User;
+}
+
+export default function Page(props: ChatProps) {
+  return (
+    <div style={{ height: "100vh" }}>
+      <button
+        style={{ position: "absolute", top: "0px", left: "0px" }}
+        onClick={() => signOut(auth)}
+      >
+        Sign Out
+      </button>
+      <PrettyChatWindow
+        projectId={process.env.NEXT_PUBLIC_CHAT_ENGINE_PROJECT_ID || ""}
+        username={props.user.email || ""}
+        secret={props.user.uid}
+        style={{ height: "100%" }}
+      />
+    </div>
+  );
+}
+```
+
+And we're done!
