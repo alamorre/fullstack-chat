@@ -65,8 +65,8 @@ body {
 #ce-upload-document-button { display: none !important; }
 
 .ce-chat-card { transition: all 0.1s ease; }
-.ce-chat-card-subtitle-html { display: none; }
-.ce-chat-card-time-stamp { display: none; }
+/* .ce-chat-card-subtitle-html { display: none; } */
+/* .ce-chat-card-time-stamp { display: none; } */
 .ce-chat-card-title { color: white; }
 .ce-hovered-chat-card { background-color: rgb(39, 40, 48) !important; }
 .ce-active-chat-card { background-color: rgb(52,53,65) !important; }
